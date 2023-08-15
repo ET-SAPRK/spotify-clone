@@ -22,7 +22,6 @@
     },
     "android": {
       "package": "com.spotify"
-    },
-    "scheme": "exp://localhost:19000/--/spotify-auth-callback"
+    }
   }
 }

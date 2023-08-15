@@ -1,15 +1,13 @@
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { makeRedirectUri, useAuthRequest,ResponseType } from 'expo-auth-session';
 import { Button } from 'react-native';
 import { StyleSheet, Text, View, SafeAreaView, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';
-import * as AppAuth from "expo-app-auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -23,8 +21,17 @@ export default function LoginScreen() {
   const navigation = useNavigation();
   const [request, response, promptAsync] = useAuthRequest(
     {
+      responseType: ResponseType.Token,
       clientId: 'c7af38460cc444b7baa7bc7a3025ff25',
-      scopes: ['user-read-email', 'playlist-modify-public'],
+      scopes: [
+        "user-read-email",
+        "user-library-read",
+        "user-read-recently-played",
+        "user-top-read",
+        "playlist-read-private",
+        "playlist-read-collaborative",
+        "playlist-modify-public" // or "playlist-modify-private"
+      ],
       usePKCE: false,
       redirectUri: 'exp://192.168.43.207:19000/--/'
       // redirectUri: makeRedirectUri({
@@ -36,10 +43,28 @@ export default function LoginScreen() {
 
   React.useEffect(() => {
     if (response?.type === 'success') {
-      const { code } = response.params;
-      navigation.replace("Main");
+      const { access_token } = response.params;
+      
+      // Fetch data from the API using the access token
+      fetch("https://api.spotify.com/v1/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${access_token}`
+        }
+      })
+      .then(response => response.json()) // Parse the response JSON
+      .then(data => {
+        console.log("Fetched data:", data);
+        // Now you can do whatever you want with the fetched data
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+      
+      navigation.navigate("Main", { access_token });
     }
   }, [response]);
+  
 
   return (
     <LinearGradient colors={["#040306", "#131624"]} style={{ flex: 1 }}>
@@ -65,7 +90,8 @@ export default function LoginScreen() {
 
         <View style={{ height: 50 }} />
         <Pressable
-         onPress={() => {promptAsync();}}
+         disabled={!request}
+         onPress={() => {promptAsync()}}
           style={{
             backgroundColor: "#1DB954",
             padding: 10,
