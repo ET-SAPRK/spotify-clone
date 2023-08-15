@@ -8,6 +8,7 @@ import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -54,14 +55,15 @@ export default function LoginScreen() {
       })
       .then(response => response.json()) // Parse the response JSON
       .then(data => {
-        console.log("Fetched data:", data);
         // Now you can do whatever you want with the fetched data
+        navigation.navigate("Main", { data:data.images[0].url });
+        AsyncStorage.setItem("token",access_token);
       })
       .catch(error => {
         console.error("Error fetching data:", error);
       });
       
-      navigation.navigate("Main", { access_token });
+      
     }
   }, [response]);
   
