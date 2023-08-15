@@ -256,17 +256,6 @@ const HomeScreen = () => {
               elevation: 3,
             }}
           >
-            <Image
-              style={{ width: 55, height: 55 }}
-              source={{ uri: "https://i.pravatar.cc/100" }}
-            />
-            <View style={styles.randomArtist}>
-              <Text
-                style={{ color: "white", fontSize: 13, fontWeight: "bold" }}
-              >
-                Hiphop Tamhiza
-              </Text>
-            </View>
           </View>
         </View>
         <FlatList
@@ -275,7 +264,6 @@ const HomeScreen = () => {
           numColumns={2}
           columnWrapperStyle={{ justifyContent: "space-between" }}
         />
-
         <Text
           style={{
             color: "white",
