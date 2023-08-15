@@ -301,6 +301,7 @@ const HomeScreen = () => {
             <RecentlyPlayedCard item={item} key={index} />
           )}
         />
+        <View style={{ height: 30 }} />
       </ScrollView>
     </LinearGradient>
   );
