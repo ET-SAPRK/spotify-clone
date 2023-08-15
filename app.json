@@ -19,6 +19,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.spotify"
-    }
+    },
+    "android": {
+      "package": "com.spotify"
+    },
+    "scheme": "exp://localhost:19000/--/spotify-auth-callback"
   }
 }
