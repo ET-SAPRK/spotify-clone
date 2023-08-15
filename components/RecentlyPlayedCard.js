@@ -11,7 +11,7 @@ const RecentlyPlayedCard = ({ item }) => {
           item: item,
         })
       }
-      style={{ margin: 10 }}
+      style={{ marginHorizontal: 10, marginRight:10}}
     >
       <Image
         style={{ width: 130, height: 130, borderRadius: 5 }}
