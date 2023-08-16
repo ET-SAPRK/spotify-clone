@@ -338,19 +338,6 @@ const LikedSongsScreen = () => {
                 <AntDesign name="heart" size={24} color="#1DB954" />
               </View>
               <View style={{marginTop:5}}>
-                <Text>Progress bar</Text>
-                <View style={{
-                  marginTop: 12,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}>
-                  <Text
-                   style={{ color: "white", fontSize: 15, color: "#D3D3D3" }}>
-                   0.00</Text>
-                  <Text  style={{ color: "white", fontSize: 15, color: "#D3D3D3" }}>
-                  3.00</Text>
-                </View>
               </View>
               <View
                 style={{
