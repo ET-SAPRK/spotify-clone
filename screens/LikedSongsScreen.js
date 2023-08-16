@@ -83,8 +83,42 @@ const LikedSongsScreen = () => {
       }
       await play(savedTracks[0]);
     };
-    const play = async () => {
-      
+    const play = async (nextTrack) => {
+      //console.log(nextTrack)
+      const preview_url = nextTrack?.track?.preview_url;
+      try {
+        await Audio.setAudioModeAsync({
+          playsInSilentModeIOS: true,
+          staysActiveInBackground: false,
+          shouldDuckAndroid: false,
+        });
+        const { sound, status } = await Audio.Sound.createAsync(
+          {
+            uri: preview_url,
+          },
+          {
+            shouldPlay: true,
+            isLooping: false,
+          },
+          onPlaybackStatusUpdate,
+        )
+        onPlaybackStatusUpdate(status);
+        setCurrentSound(sound);
+        await sound.playAsync();
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+
+    const onPlaybackStatusUpdate = async(status) => {
+      console.log(status)
+      if (status.isLoaded && status.isPlaying) {
+        const progress = status.positionMillis / status.durationMillis;
+        console.log("progresss", progress);
+        setProgress(progress);
+        setCurrentTime(status.positionMillis);
+        setTotalDuration(status.durationMillis);
+      }
     }
 
   return (
