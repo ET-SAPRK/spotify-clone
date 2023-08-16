@@ -23,7 +23,7 @@ export default function LoginScreen() {
   const [request, response, promptAsync] = useAuthRequest(
     {
       responseType: ResponseType.Token,
-      clientId: 'c7af38460cc444b7baa7bc7a3025ff25',
+      clientId: 'your client Id',
       scopes: [
         "user-read-email",
         "user-library-read",
