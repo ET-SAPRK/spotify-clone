@@ -83,6 +83,9 @@ const LikedSongsScreen = () => {
       }
       await play(savedTracks[0]);
     };
+    const play = async () => {
+      
+    }
 
   return (
     <>
@@ -195,9 +198,154 @@ const LikedSongsScreen = () => {
                 <SongItem item={item} key={index} />
                )}
             />
-
        </ScrollView>
        </LinearGradient>
+        {
+          currentTrack && (
+            <Pressable
+          onPress={() => setModalVisible(!modalVisible)}
+          style={{
+            backgroundColor: "#5072A7",
+            width: "90%",
+            padding: 10,
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginBottom: 15,
+            position: "absolute",
+            borderRadius: 6,
+            left: 5,
+            bottom: 10,
+            justifyContent: "space-between",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <Image
+              style={{ width: 40, height: 40 }}
+              source={{ uri: currentTrack?.track?.album?.images[0].url }}
+            />
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: 13,
+                width: 220,
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+               {currentTrack?.track?.name} •{" "}
+              {currentTrack?.track?.artists[0].name}
+            </Text>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <AntDesign name="heart" size={24} color="#1DB954" />
+            <Pressable>
+              <AntDesign name="pausecircle" size={24} color="white" />
+            </Pressable>
+          </View>
+        </Pressable>
+          )
+        }
+        <BottomModal
+        visible={modalVisible}
+        onHardwareBackPress={() => setModalVisible(false)}
+        swipeDirection={["up", "down"]}
+        swipeThreshold={200}
+        >
+          <ModalContent
+          style={{ height: "100%", width: "100%", backgroundColor: "#5072A7" }}
+        >
+          <View style={{ height: "100%", width: "100%", marginTop: 10 }}>
+          <Pressable
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+               <AntDesign
+                onPress={() => setModalVisible(!modalVisible)}
+                name="down"
+                size={24}
+                color="white"
+              />
+               <Text
+                style={{ fontSize: 14, fontWeight: "bold", color: "white" }}
+              >
+                 {currentTrack?.track?.name}
+              </Text>
+              <Entypo name="dots-three-vertical" size={24} color="white" />
+            </Pressable>
+            <View style={{ height: 10 }} />
+            <View style={{ padding: 10 }}>
+            <Image
+                style={{ width: "100%", height: 290, borderRadius: 4 }}
+                source={{ uri: currentTrack?.track?.album?.images[0].url }}
+              />
+              <View
+                style={{
+                  marginTop: 20,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View>
+                <Text
+                    style={{ fontSize: 18, fontWeight: "bold", color: "white" }}
+                  >
+                    {currentTrack?.track?.name}
+                  </Text>
+                  <Text style={{ color: "#D3D3D3", marginTop: 4 }}>
+                    {currentTrack?.track?.artists[0].name}
+                  </Text>
+                </View>
+                <AntDesign name="heart" size={24} color="#1DB954" />
+              </View>
+              <View style={{marginTop:5}}>
+                <Text>Progress bar</Text>
+                <View style={{
+                  marginTop: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}>
+                  <Text
+                   style={{ color: "white", fontSize: 15, color: "#D3D3D3" }}>
+                   0.00</Text>
+                  <Text  style={{ color: "white", fontSize: 15, color: "#D3D3D3" }}>
+                  3.00</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: 17,
+                }}
+              >
+                <Pressable>
+                  <FontAwesome name="arrows" size={30} color="#03C03C" />
+                </Pressable>
+                <Pressable>
+                  <Ionicons name="play-skip-back" size={30} color="white" />
+                </Pressable>
+                <Pressable>
+                <AntDesign name="pausecircle" size={60} color="white" />
+                </Pressable>
+                <Pressable>
+                  <Ionicons name="play-skip-forward" size={30} color="white" />
+                </Pressable>
+                <Pressable>
+                  <Feather name="repeat" size={30} color="#03C03C" />
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </ModalContent>
+        </BottomModal>
     </>
   )
 }

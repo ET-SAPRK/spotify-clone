@@ -9,7 +9,7 @@ export default function App() {
     <>
       <PlayerContext>
         <Navigation />
-        {/* <ModalPortal/> */}
+        <ModalPortal/>
       </PlayerContext>
     </>
   );
