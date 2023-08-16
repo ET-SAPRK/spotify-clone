@@ -127,7 +127,7 @@ const HomeScreen = () => {
 
     getTopItems();
   }, []);
-  console.log(recentlyplayed);
+ // console.log(recentlyplayed);
   return (
     <LinearGradient colors={["#040306", "#131624"]} style={{ flex: 1 }}>
       <ScrollView style={{ marginTop: 50 }}>

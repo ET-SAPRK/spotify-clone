@@ -7,11 +7,10 @@ import Navigation from "./StackNavigator";
 export default function App() {
   return (
     <>
-      {/* <PlayerContext>
+      <PlayerContext>
         <Navigation />
-        <ModalPortal/>
-      </PlayerContext> */}
-      <Navigation />
+        {/* <ModalPortal/> */}
+      </PlayerContext>
     </>
   );
 }

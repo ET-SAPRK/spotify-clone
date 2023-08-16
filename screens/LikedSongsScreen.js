@@ -39,7 +39,7 @@ const LikedSongsScreen = () => {
   ];
   const navigation = useNavigation();
   const [backgroundColor, setBackgroundColor] = useState("#0A2647");
- // const { currentTrack, setCurrentTrack } = useContext(Player);
+ const { currentTrack, setCurrentTrack } = useContext(Player);
   const [modalVisible, setModalVisible] = useState(false);
   const [searchedTracks, setSearchedTracks] = useState([]);
   const [input, setInput] = useState("");
@@ -70,12 +70,19 @@ const LikedSongsScreen = () => {
     }
     const data = await response.json();
     setSavedTracks(data.items);
-    console.log(savedTracks)
+    //console.log(savedTracks)
     }
     useEffect(() => {
       getSavedTracks();
     }, []);
+    //console.log(savedTracks)
 
+    const playTrack = async () => {
+      if (savedTracks.length > 0) {
+        setCurrentTrack(savedTracks[0]);
+      }
+      await play(savedTracks[0]);
+    };
 
   return (
     <>
@@ -166,7 +173,7 @@ const LikedSongsScreen = () => {
                 color="#1DB954"
               />
               <Pressable
-                onPress={() =>{}}
+                onPress={playTrack}
                 style={{
                   width: 60,
                   height: 60,
@@ -180,6 +187,14 @@ const LikedSongsScreen = () => {
               </Pressable>
             </View>
             </Pressable>
+
+            <FlatList 
+              showsVerticalScrollIndicator={false}
+              data={savedTracks}
+              renderItem={({ item, index }) => (
+                <SongItem item={item} key={index} />
+               )}
+            />
 
        </ScrollView>
        </LinearGradient>
